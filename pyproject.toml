@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "wyoming-parakeet-mlx"
+version = "1.0.0"
+description = "Wyoming protocol server for Parakeet MLX speech-to-text on Apple Silicon"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "wysie"},
+]
+keywords = ["wyoming", "parakeet", "mlx", "stt", "speech-to-text", "home-assistant", "apple-silicon"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Text Processing :: Linguistic",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "wyoming>=1.5.2",
+    "parakeet-mlx>=0.5.0",
+    "numpy",
+]
+
+[project.urls]
+Homepage = "https://github.com/wyoming-parakeet-mlx"
+Repository = "https://github.com/wyoming-parakeet-mlx"
+
+[project.scripts]
+wyoming-parakeet-mlx = "wyoming_parakeet_mlx.__main__:run"
+
+[tool.setuptools.packages.find]
+include = ["wyoming_parakeet_mlx*"]
+
+[tool.setuptools.package-data]
+wyoming_parakeet_mlx = ["VERSION"]

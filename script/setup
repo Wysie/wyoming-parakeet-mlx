@@ -1,0 +1,26 @@
+#!/bin/bash
+# Set up the virtual environment and install dependencies using uv.
+# Requires: uv (https://docs.astral.sh/uv/)
+#   Install with: brew install uv
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+VENV_DIR="${PROJECT_DIR}/.venv"
+PYTHON_VERSION="3.12"
+
+echo "Setting up wyoming-parakeet-mlx..."
+
+# Create venv only if it doesn't exist
+if [ ! -d "$VENV_DIR" ]; then
+    echo "Creating virtual environment with Python ${PYTHON_VERSION}..."
+    uv venv --python "$PYTHON_VERSION" "$VENV_DIR"
+else
+    echo "Virtual environment already exists at ${VENV_DIR}"
+fi
+
+# Install/update dependencies
+echo "Installing dependencies..."
+uv pip install --python "$VENV_DIR/bin/python" -r "${PROJECT_DIR}/requirements.txt"
+
+echo "Setup complete."
