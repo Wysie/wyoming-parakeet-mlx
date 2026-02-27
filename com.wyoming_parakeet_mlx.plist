@@ -4,6 +4,11 @@
 <dict>
   <key>Label</key>
   <string>com.wyoming_parakeet_mlx</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+      <key>PATH</key>
+      <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
   <key>ProgramArguments</key>
   <array>
     <string><PWD-VARIABLE>/wyoming-parakeet-mlx.sh</string>
