@@ -20,8 +20,8 @@
   <key>WorkingDirectory</key>
   <string><PWD-VARIABLE></string>
   <key>StandardOutPath</key>
-  <string><PWD-VARIABLE>/log/run.out</string>
+  <string><PWD-VARIABLE>/log/wyoming-parakeet-mlx.log</string>
   <key>StandardErrorPath</key>
-  <string><PWD-VARIABLE>/log/run.err</string>
+  <string><PWD-VARIABLE>/log/wyoming-parakeet-mlx.log</string>
 </dict>
 </plist>
