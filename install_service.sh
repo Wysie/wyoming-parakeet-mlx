@@ -14,6 +14,17 @@ if [ ! -f "${SCRIPT_DIR}/.venv/bin/python" ]; then
     exit 1
 fi
 
+# Prompt for port number
+DEFAULT_PORT=10301
+read -r -p "Enter port number to listen on [${DEFAULT_PORT}]: " PORT_INPUT
+PORT="${PORT_INPUT:-${DEFAULT_PORT}}"
+
+# Validate that the port is a number in the valid range
+if ! [[ "${PORT}" =~ ^[0-9]+$ ]] || [ "${PORT}" -lt 1 ] || [ "${PORT}" -gt 65535 ]; then
+    echo "Error: '${PORT}' is not a valid port number (must be 1–65535)."
+    exit 1
+fi
+
 # Create log directory
 mkdir -p "${SCRIPT_DIR}/log"
 
@@ -24,13 +35,16 @@ chmod +x "${SCRIPT_DIR}/wyoming-parakeet-mlx.sh"
 
 # Copy and configure plist
 cp "${PLIST_SRC}" "${PLIST_DST}"
-sed -i '' -e "s|<PWD-VARIABLE>|${SCRIPT_DIR}|g" "${PLIST_DST}"
+sed -i '' \
+    -e "s|<PWD-VARIABLE>|${SCRIPT_DIR}|g" \
+    -e "s|<PORT-VARIABLE>|${PORT}|g" \
+    "${PLIST_DST}"
 
 # Load the service
 launchctl load "${PLIST_DST}"
 
 echo "✅ Wyoming Parakeet MLX service installed and started."
-echo "   Listening on tcp://0.0.0.0:10301"
+echo "   Listening on tcp://0.0.0.0:${PORT}"
 echo ""
 echo "   Logs: ${SCRIPT_DIR}/log/wyoming-parakeet-mlx.log"
 echo ""

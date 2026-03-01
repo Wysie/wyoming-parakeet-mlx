@@ -54,13 +54,19 @@ It is designed as a drop-in replacement for `wyoming-mlx-whisper`, but uses the 
     ./install_service.sh
     ```
 
-    The server will start automatically and listen on `tcp://0.0.0.0:10301`.
+    The script will prompt you for a port number (default: `10301`):
+
+    ```
+    Enter port number to listen on [10301]:
+    ```
+
+    Press **Enter** to accept the default, or type a custom port number. The server will then start and listen on `tcp://0.0.0.0:<port>`.
 
 ## Home Assistant Configuration
 
 1.  Go to **Settings > Devices & Services > Add Integration**.
 2.  Search for **Wyoming Protocol** and select it.
-3.  Enter the IP address of your Mac and the port `10301`.
+3.  Enter the IP address of your Mac and the port you chose during installation (default: `10301`).
 4.  Click **Submit**. The Parakeet STT service should now be available to use in your voice pipelines.
 
 ## Usage
@@ -78,9 +84,19 @@ The server is controlled via `launchctl`.
 *   **To View Logs:**
     Logs are stored in the `log` directory within the repository folder.
     ```bash
-    tail -f log/run.out
-    tail -f log/run.err
+    tail -f log/wyoming-parakeet-mlx.log
     ```
+
+### Changing the Port
+
+To change the port after the service has already been installed, uninstall and reinstall the service:
+
+```bash
+./uninstall_service.sh
+./install_service.sh
+```
+
+You will be prompted for a new port number during reinstallation.
 
 ### Running Manually
 
@@ -90,10 +106,16 @@ To run the server directly in your terminal for debugging:
 ./wyoming-parakeet-mlx.sh --debug
 ```
 
-Or with a custom port:
+Or with a custom port by setting the `PARAKEET_PORT` environment variable:
 
 ```bash
-.venv/bin/python -m wyoming_parakeet_mlx --uri tcp://0.0.0.0:10301 --debug
+PARAKEET_PORT=10302 ./wyoming-parakeet-mlx.sh --debug
+```
+
+Or by passing the URI directly:
+
+```bash
+.venv/bin/python -m wyoming_parakeet_mlx --uri tcp://0.0.0.0:10302 --debug
 ```
 
 ## Uninstallation
